@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".StoresActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/gotostores"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            app:cardCornerRadius="8dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/clothing"
+                android:foreground="@drawable/black_overlay"
+                android:alpha="0.59"
+                />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Number of Stores"
+                    android:textSize="25sp"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="#FFFFFF"
+                    android:layout_gravity="center"
+                    />
+
+
+            </FrameLayout>
+
+
+            <!-- Add other views or content inside the CardView as needed -->
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="8dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/outsidemall"
+                android:foreground="@drawable/black_overlay"
+                android:alpha="0.59"
+                />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/numberofstores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 20"
+                    android:textSize="30sp"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="#FFFFFF"
+                    android:layout_gravity="center"
+                    />
+
+
+            </FrameLayout>
+
+
+            <!-- Add other views or content inside the CardView as needed -->
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/floors"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            app:cardCornerRadius="8dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/steps"
+                android:foreground="@drawable/black_overlay"
+                android:alpha="0.59"
+                />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Number of Floors"
+                    android:textSize="25sp"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="#FFFFFF"
+                    android:layout_gravity="center"
+                    />
+
+
+            </FrameLayout>
+
+
+            <!-- Add other views or content inside the CardView as needed -->
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="8dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/numbers"
+                android:foreground="@drawable/black_overlay"
+                android:alpha="0.59"
+                />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/numberoffloors"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:textSize="30sp"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="#FFFFFF"
+                    android:layout_gravity="center"
+                    />
+
+
+            </FrameLayout>
+
+
+            <!-- Add other views or content inside the CardView as needed -->
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Add stores"
+                        android:fontFamily="@font/poppinsmedium"
+                        android:layout_margin="10dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/blue"
+                        android:layout_marginBottom="15dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:id="@+id/Searchid"
+                            android:layout_width="250dp"
+                            android:layout_height="41dp"
+                            android:background="@drawable/edit_view"
+                            android:paddingLeft="15dp"
+                            android:layout_margin="5dp"
+                            android:hint="Search using store Id.... "/>
+                        <Button
+
+                            android:id="@+id/searchBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Search"
+                            android:layout_marginLeft="15dp"
+                            android:background="@drawable/btn_bg"
+                            android:fontFamily="@font/poppinsbold"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/blue"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/poppiesregular"
+                        android:text="* Every Store you search will be displayed in the bellow form *"/>
+
+
+
+                    <EditText
+                        android:id="@+id/idid"
+                        android:layout_width="match_parent"
+                        android:layout_height="41dp"
+                        android:background="@drawable/edit_view"
+                        android:paddingLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:hint="Store ID "/>
+
+                    <EditText
+                        android:id="@+id/nameEdittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="41dp"
+                        android:background="@drawable/edit_view"
+                        android:paddingLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:hint="Store Name "/>
+
+
+                    <EditText
+                        android:id="@+id/categoryEdittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="41dp"
+                        android:background="@drawable/edit_view"
+                        android:paddingLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:hint="Store Category "/>
+                    <EditText
+                        android:id="@+id/mallEdittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="41dp"
+                        android:background="@drawable/edit_view"
+                        android:paddingLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:hint="Mall Id "/>
+
+                    <EditText
+                        android:id="@+id/floorEdittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="41dp"
+                        android:background="@drawable/edit_view"
+                        android:paddingLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:hint="Store Floor "/>
+                    <EditText
+                        android:id="@+id/emailEdittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="41dp"
+                        android:background="@drawable/edit_view"
+                        android:paddingLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:hint="Store Email "/>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/addstore"
+                            android:layout_width="130dp"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="35dp"
+                            android:background="@drawable/btn_bg"
+                            android:layout_gravity="center|left"
+                            android:text="ADD STORE" />
+                        <Button
+                            android:id="@+id/updatestore"
+                            android:layout_width="120dp"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="35dp"
+                            android:layout_marginLeft="15dp"
+                            android:background="@drawable/btn_bg"
+                            android:layout_gravity="center"
+                            android:text="UPDATE" />
+                        <Button
+                            android:id="@+id/DELETEstore"
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="35dp"
+                            android:background="@drawable/btn_bg"
+                            android:layout_gravity="center|right"
+                            android:text="DELETE" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Stores"
+                        android:fontFamily="@font/poppinsmedium"
+                        android:layout_margin="10dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/blue"
+                        android:layout_marginBottom="15dp"/>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        app:cardCornerRadius="8dp">
+
+
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:id="@+id/storename"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Stores"
+                                android:textSize="20sp"
+                                android:fontFamily="@font/poppinsbold"
+                                android:textColor="@color/blue"
+                               android:padding="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_gravity="center|left"
+                                />
+                            <TextView
+                                android:id="@+id/FloorSection"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Stores"
+                                android:textSize="20sp"
+                                android:fontFamily="@font/poppiesregular"
+                                android:textColor="@color/blue"
+                                android:padding="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_gravity="center|right"
+                                />
+
+
+                        </FrameLayout>
+
+
+                        <!-- Add other views or content inside the CardView as needed -->
+
+                    </androidx.cardview.widget.CardView>
+                    <ListView
+                        android:id="@+id/storeListView"
+                        android:layout_width="match_parent"
+                        android:visibility="invisible"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bar Graph of Stores"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppinsmedium"/>
+
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/lineChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="500dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pie chart of Stores"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:layout_marginBottom="-70dp"
+                        android:layout_marginTop="25dp"
+                        android:fontFamily="@font/poppinsmedium"/>
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/lineChart2"
+                        android:layout_width="match_parent"
+                        android:elevation="18dp"
+                        android:layout_height="500dp" />
+
+                </LinearLayout>
+
+
+            </ScrollView>
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

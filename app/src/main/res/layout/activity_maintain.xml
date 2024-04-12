@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress ALL -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MaintainActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@drawable/main"/>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/Searchidcleaner"
+                    android:layout_width="250dp"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_margin="5dp"
+                    android:hint="Search using store Id.... "/>
+                <Button
+
+                    android:id="@+id/searchBtnCleaners"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Search"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/btn_bg"
+                    android:fontFamily="@font/poppinsbold"/>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:cardCornerRadius="8dp">
+
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/cleanerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Type"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppinsbold"
+                        android:textColor="@color/blue"
+                        android:padding="10dp"
+
+                        android:layout_gravity="center|left"
+                        />
+                    <TextView
+                        android:id="@+id/shiftIdshow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="status"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppiesregular"
+                        android:textColor="@color/blue"
+                        android:padding="10dp"
+
+                        android:layout_gravity="center|right"
+                        />
+
+
+                </FrameLayout>
+
+
+                <!-- Add other views or content inside the CardView as needed -->
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Maintenance"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:layout_margin="10dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/blue"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/SecID"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="Maintenance ID "/>
+
+                <EditText
+                    android:id="@+id/cleanerEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="Mall ID "/>
+
+
+                <EditText
+                    android:id="@+id/mallEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="Maintenance Type"/>
+                <EditText
+                    android:id="@+id/EmailEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="Description "/>
+
+                <EditText
+                    android:id="@+id/ShirtEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="Date "/>
+                <EditText
+                    android:id="@+id/AreaEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="Status"/>
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/AddSec"
+                        android:layout_width="130dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="35dp"
+                        android:background="@drawable/btn_bg"
+                        android:layout_gravity="center|left"
+                        android:text="ADD " />
+                    <Button
+                        android:id="@+id/UpdateSec"
+                        android:layout_width="120dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="35dp"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/btn_bg"
+                        android:layout_gravity="center"
+                        android:text="UPDATE" />
+                    <Button
+                        android:id="@+id/DeleteSec"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="35dp"
+                        android:background="@drawable/btn_bg"
+                        android:layout_gravity="center|right"
+                        android:text="DELETE" />
+
+                </FrameLayout>
+
+
+
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+    </ScrollView>
+
+</LinearLayout>
