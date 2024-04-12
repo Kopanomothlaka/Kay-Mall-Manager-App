@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FEFEFE"
+    tools:context=".MainActivity">
+    
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="19dp"
+            android:src="@drawable/ullustrator"
+            android:layout_gravity="center"/>
+        <ImageView
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logout"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="top|right"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:text="Log Out"
+            android:fontFamily="@font/poppiesregular"
+            android:textColor="@color/blue"
+            android:layout_marginTop="80dp"
+            android:layout_gravity="top|right"/>
+    </FrameLayout>
+
+
+
+
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:orientation="horizontal">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Kay"
+               android:fontFamily="@font/poppinsbold"
+               android:textSize="50sp"
+               android:layout_gravity="center"
+               />
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Mall"
+               android:fontFamily="@font/poppinsbold"
+               android:textSize="50sp"
+               android:textColor="@color/gold"
+               android:layout_gravity="center"
+               />
+
+       </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/gotostores"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="16dp"
+                    app:cardCornerRadius="8dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/clothing"
+                        android:foreground="@drawable/black_overlay"
+                        android:alpha="0.59"
+                        />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                       <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Stores"
+                        android:textSize="30sp"
+                           android:fontFamily="@font/poppinsmedium"
+                        android:textColor="#FFFFFF"
+                        android:layout_gravity="center"
+                        />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/right"
+                            android:layout_marginRight="25dp"
+                            android:layout_gravity="center|right"/>
+
+                    </FrameLayout>
+
+
+                    <!-- Add other views or content inside the CardView as needed -->
+
+                </androidx.cardview.widget.CardView>
+         <androidx.cardview.widget.CardView
+             android:id="@+id/GoToSecurity"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="16dp"
+                    app:cardCornerRadius="8dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/security"
+                        android:foreground="@drawable/black_overlay"
+                        android:alpha="0.59"
+                        />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Security"
+                            android:textSize="30sp"
+                            android:fontFamily="@font/poppinsmedium"
+                            android:textColor="#FFFFFF"
+                            android:layout_gravity="center"
+                            />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/right"
+                            android:layout_marginRight="25dp"
+                            android:layout_gravity="center|right"/>
+
+                    </FrameLayout>
+
+
+                    <!-- Add other views or content inside the CardView as needed -->
+
+                </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/gotocleaners"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="8dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/clean"
+                android:foreground="@drawable/black_overlay"
+                android:alpha="0.59"
+                />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cleaners"
+                    android:textSize="30sp"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="#FFFFFF"
+                    android:layout_gravity="center"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/right"
+                    android:layout_marginRight="25dp"
+                    android:layout_gravity="center|right"/>
+
+            </FrameLayout>
+
+
+            <!-- Add other views or content inside the CardView as needed -->
+
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+    </LinearLayout>
+    </ScrollView>
+
+
+
+</LinearLayout>
