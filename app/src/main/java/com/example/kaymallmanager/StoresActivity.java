@@ -2,7 +2,9 @@ package com.example.kaymallmanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +32,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,10 +61,10 @@ public class StoresActivity extends AppCompatActivity {
 
         StoreID=findViewById(R.id.idid);
         StoreName=findViewById(R.id.nameEdittext);
-        StoreCategory=findViewById(R.id.categoryEdittext);
-        MallID=findViewById(R.id.mallEdittext);
         FloorSection=findViewById(R.id.floorEdittext);
         ContactInformation=findViewById(R.id.emailEdittext);
+
+
         add=findViewById(R.id.addstore);
 
         numberofstore=findViewById(R.id.numberofstores);
@@ -254,8 +257,6 @@ public class StoresActivity extends AppCompatActivity {
                         // Store found, update UI with store information
                         StoreID.setText(rs.getString("StoreID"));
                         StoreName.setText(rs.getString("StoreName"));
-                        StoreCategory.setText(rs.getString("StoreCategoryID"));
-                        MallID.setText(rs.getString("MallID"));
                         FloorSection.setText(rs.getString("FloorSection"));
                         ContactInformation.setText(rs.getString("ContactInformation"));
                         progressDialog.dismiss();
@@ -333,25 +334,46 @@ public class StoresActivity extends AppCompatActivity {
                     Toast.makeText(this, "Please enter a Store ID", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                 } else {
-                    String sqlDelete = "DELETE FROM Store WHERE StoreID = '" + storeID + "'";
-                    Statement st = con.createStatement();
-                    int rowsAffected = st.executeUpdate(sqlDelete);
+                    // Show a confirmation dialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Confirm Deletion");
+                    builder.setMessage("Are you sure you want to delete this store?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            try {
+                                String sqlDelete = "DELETE FROM Store WHERE StoreID = '" + storeID + "'";
+                                Statement st = con.createStatement();
+                                int rowsAffected = st.executeUpdate(sqlDelete);
 
-                    if (rowsAffected > 0) {
-                        // Deletion successful
-                        Toast.makeText(this, "Store deleted successfully", Toast.LENGTH_SHORT).show();
-                        // Clear the fields after deletion if needed
-                        StoreID.setText("");
-                        StoreName.setText("");
-                        StoreCategory.setText("");
-                        MallID.setText("");
-                        FloorSection.setText("");
-                        ContactInformation.setText("");
-                    } else {
-                        // Deletion failed, store not found
-                        Toast.makeText(this, "Store not found or deletion failed", Toast.LENGTH_SHORT).show();
-                    }
-                    progressDialog.dismiss();
+                                if (rowsAffected > 0) {
+                                    // Deletion successful
+                                    Toast.makeText(getApplicationContext(), "Store deleted successfully", Toast.LENGTH_SHORT).show();
+                                    // Clear the fields after deletion if needed
+                                    StoreID.setText("");
+                                    StoreName.setText("");
+                                    FloorSection.setText("");
+                                    ContactInformation.setText("");
+                                } else {
+                                    // Deletion failed, store not found
+                                    Toast.makeText(getApplicationContext(), "Store not found or deletion failed", Toast.LENGTH_SHORT).show();
+                                }
+                                progressDialog.dismiss();
+                            } catch (Exception e) {
+                                Log.e("Error : ", e.getMessage());
+                                progressDialog.dismiss();
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Cancelled deletion
+                            progressDialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             }
         } catch (Exception e) {
@@ -363,64 +385,87 @@ public class StoresActivity extends AppCompatActivity {
 
     private void UpdateStore() {
         try {
+            progressDialog.setMessage("Updating store...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
             dBconnection = new DBconnection();
             con = dBconnection.connectionclasss();
             if (con != null) {
-                String storeID = StoreID.getText().toString().trim();
+                String storeId = StoreID.getText().toString().trim();
                 String storeName = StoreName.getText().toString().trim();
-                String storeCategory = StoreCategory.getText().toString().trim();
-                String mallID = MallID.getText().toString().trim();
                 String floorSection = FloorSection.getText().toString().trim();
                 String contactInformation = ContactInformation.getText().toString().trim();
 
-                if (storeID.isEmpty()) {
-                    Toast.makeText(StoresActivity.this, "Please enter Store ID", Toast.LENGTH_SHORT).show();
-                }
-                 else if(storeName.isEmpty()){
-                    Toast.makeText(StoresActivity.this, "Please enter Store Name", Toast.LENGTH_SHORT).show();
+                if (storeId.isEmpty()) {
+                    Toast.makeText(this, "Please enter Store ID for update", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                } else if (!storeId.matches("\\d{2}")) {
+                    Toast.makeText(this, "Store ID should contain exactly two digits", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                } else {
+                    StringBuilder sqlUpdate = new StringBuilder("UPDATE Store SET ");
+                    List<String> updates = new ArrayList<>();
 
-
-                }
-                else if(!storeCategory.matches("[0-9]")){
-                    Toast.makeText(StoresActivity.this, "Please enter correct Category Id e.g from 1-7", Toast.LENGTH_SHORT).show();
-
-                }
-                else if(!mallID.matches("[0-9]{1}")){
-                    Toast.makeText(StoresActivity.this, "Please enter correct Mall ID e.g 1", Toast.LENGTH_SHORT).show();
-
-                }
-
-
-
-                else {
-                    String sql = "UPDATE Store SET StoreName = ?, StoreCategoryID = ?, MallID = ?, FloorSection = ?, ContactInformation = ? WHERE StoreID = ?";
-                    PreparedStatement preparedStatement = con.prepareStatement(sql);
-                    preparedStatement.setString(1, storeName);
-                    preparedStatement.setString(2, storeCategory);
-                    preparedStatement.setString(3, mallID);
-                    preparedStatement.setString(4, floorSection);
-                    preparedStatement.setString(5, contactInformation);
-                    preparedStatement.setString(6, storeID);
-
-                    int rowsAffected = preparedStatement.executeUpdate();
-                    if (rowsAffected > 0) {
-                        Toast.makeText(StoresActivity.this, "Store Updated", Toast.LENGTH_LONG).show();
-                        StoreID.setText("");
-                        StoreName.setText("");
-                        StoreCategory.setText("");
-                        MallID.setText("");
-                        FloorSection.setText("");
-                        ContactInformation.setText("");
-                    } else {
-                        Toast.makeText(StoresActivity.this, "Failed to update store", Toast.LENGTH_LONG).show();
+                    if (!storeName.isEmpty() && storeName.matches("[a-zA-Z]+")) {
+                        updates.add("StoreName = '" + storeName + "'");
                     }
+                    if (!floorSection.isEmpty() && floorSection.matches("[a-zA-Z]+")) {
+                        updates.add("FloorSection = '" + floorSection + "'");
+                    }
+                    if (!contactInformation.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(contactInformation).matches()) {
+                        updates.add("ContactInformation = '" + contactInformation + "'");
+                    }
+
+                    if (updates.isEmpty()) {
+                        Toast.makeText(this, "No valid updates provided", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        return; // Exit method if no valid updates
+                    }
+
+                    sqlUpdate.append(String.join(", ", updates));
+                    sqlUpdate.append(" WHERE StoreId = '").append(storeId).append("'");
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Confirm Update");
+                    builder.setMessage("Are you sure you want to update this store?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            try {
+                                Statement st = con.createStatement();
+                                int rowsAffected = st.executeUpdate(sqlUpdate.toString());
+
+                                if (rowsAffected > 0) {
+                                    // Update successful
+                                    Toast.makeText(StoresActivity.this, "Store updated successfully", Toast.LENGTH_SHORT).show();
+                                    // Clear the fields after update if needed
+                                    StoreID.setText("");
+                                    StoreName.setText("");
+                                    FloorSection.setText("");
+                                    ContactInformation.setText("");
+                                } else {
+                                    // Update failed
+                                    Toast.makeText(StoresActivity.this, "Failed to update store", Toast.LENGTH_SHORT).show();
+                                }
+                                progressDialog.dismiss();
+                            } catch (SQLException e) {
+                                Log.e("SQL Error: ", e.getMessage());
+                                progressDialog.dismiss();
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("No", null);
+                    builder.show();
                 }
             }
-        }
-        catch (Exception e) {
-            Log.e("Error: ", e.getMessage());
+        } catch (Exception e) {
+            Log.e("Error : ", e.getMessage());
+            progressDialog.dismiss();
         }
     }
+
+
 
 
     private void calculateStoreCount() {
@@ -450,66 +495,75 @@ public class StoresActivity extends AppCompatActivity {
 
     private void AddStore() {
         try {
+            progressDialog.setMessage("Adding store...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
             dBconnection = new DBconnection();
             con = dBconnection.connectionclasss();
             if (con != null) {
-                String storeID = StoreID.getText().toString().trim();
+                String storeId = StoreID.getText().toString().trim();
                 String storeName = StoreName.getText().toString().trim();
-                String storeCategory = StoreCategory.getText().toString().trim();
-                String mallID = MallID.getText().toString().trim();
                 String floorSection = FloorSection.getText().toString().trim();
                 String contactInformation = ContactInformation.getText().toString().trim();
 
-                if (storeID.isEmpty() || storeName.isEmpty() || storeCategory.isEmpty() || mallID.isEmpty() || floorSection.isEmpty() || contactInformation.isEmpty()) {
-                    Toast.makeText(StoresActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                }
+                if (storeId.isEmpty() || storeName.isEmpty() || floorSection.isEmpty() || contactInformation.isEmpty()) {
+                    Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                } else if (!storeId.matches("\\d{2}")) {
+                    Toast.makeText(this, "Store ID should contain exactly two digits", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                } else if (!storeName.matches("[a-zA-Z]+")) {
+                    StoreName.setError("Store name should contain only letters");
+                    progressDialog.dismiss();
+                } else if (!floorSection.matches("[a-zA-Z]+")) {
+                    FloorSection.setError("Floor name should contain only letters");
+                    progressDialog.dismiss();
+                } else if (!Patterns.EMAIL_ADDRESS.matcher(contactInformation).matches()) {
+                    ContactInformation.setError("Enter valid email address");
+                    progressDialog.dismiss();
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Confirm Add");
+                    builder.setMessage("Are you sure you want to add this store?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            try {
+                                String sqlInsert = "INSERT INTO Store (StoreId, StoreName, FloorSection, ContactInformation) " +
+                                        "VALUES ('" + storeId + "','" + storeName + "', '" + floorSection + "', '" + contactInformation + "')";
+                                Statement st = con.createStatement();
+                                int rowsAffected = st.executeUpdate(sqlInsert);
 
-                else if (!storeCategory.matches("[0-9]")){
-                    Toast.makeText(StoresActivity.this, "Enter correct storeCategory e.g 1-7", Toast.LENGTH_SHORT).show();
-
-
-                }
-                else if (!mallID.matches("[0-9]{1}")){
-                    Toast.makeText(StoresActivity.this, "Enter correct MallID e.g 1-2", Toast.LENGTH_SHORT).show();
-
-
-                }
-                else if (!Patterns.EMAIL_ADDRESS.matcher(contactInformation).matches()){
-                    Toast.makeText(StoresActivity.this, "Enter correct MallID e.g 1-2", Toast.LENGTH_SHORT).show();
-
-
-                }
-
-                    else {
-                    String sql = "INSERT INTO Store (StoreID, StoreName, StoreCategoryID, MallID, FloorSection, ContactInformation) VALUES (?, ?, ?, ?, ?, ?)";
-                    PreparedStatement preparedStatement = con.prepareStatement(sql);
-                    preparedStatement.setString(1, storeID);
-                    preparedStatement.setString(2, storeName);
-                    preparedStatement.setString(3, storeCategory);
-                    preparedStatement.setString(4, mallID);
-                    preparedStatement.setString(5, floorSection);
-                    preparedStatement.setString(6, contactInformation);
-
-                    int rowsAffected = preparedStatement.executeUpdate();
-                    if (rowsAffected > 0) {
-                        Toast.makeText(StoresActivity.this, "New Store Added", Toast.LENGTH_LONG).show();
-                        // Clear EditText fields after successful addition
-                        StoreID.setText("");
-                        StoreName.setText("");
-                        StoreCategory.setText("");
-                        MallID.setText("");
-                        FloorSection.setText("");
-                        ContactInformation.setText("");
-                    } else {
-                        Toast.makeText(StoresActivity.this, "Failed to add store", Toast.LENGTH_LONG).show();
-                    }
+                                if (rowsAffected > 0) {
+                                    // Insertion successful
+                                    Toast.makeText(StoresActivity.this, "Store added successfully", Toast.LENGTH_SHORT).show();
+                                    // Clear the fields after insertion if needed
+                                    StoreID.setText("");
+                                    StoreName.setText("");
+                                    FloorSection.setText("");
+                                    ContactInformation.setText("");
+                                } else {
+                                    // Insertion failed
+                                    Toast.makeText(StoresActivity.this, "Failed to add store", Toast.LENGTH_SHORT).show();
+                                }
+                                progressDialog.dismiss();
+                            } catch (SQLException e) {
+                                Log.e("SQL Error: ", e.getMessage());
+                                progressDialog.dismiss();
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("No", null);
+                    builder.show();
                 }
             }
-        }
-        catch (Exception e) {
-            Log.e("Error: ", e.getMessage());
+        } catch (Exception e) {
+            Log.e("Error : ", e.getMessage());
+            progressDialog.dismiss();
         }
     }
+
 
 
 }

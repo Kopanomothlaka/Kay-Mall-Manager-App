@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ProfileActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/backhome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/leftarrow"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Profile"
+            android:layout_gravity="center"
+            android:fontFamily="@font/poppinsmedium"
+            android:textColor="@color/blue"
+
+            android:textSize="24sp"/>
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:src="@drawable/profile_pic"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/view_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:text="Email"
+                    android:padding="10dp"
+                    android:background="@drawable/text_view"/>
+                <EditText
+                    android:id="@+id/adminemail"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="Email "/>
+                <Button
+                    android:id="@+id/updatebtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsbold"
+                    android:layout_marginTop="15dp"
+                    android:text="UPDATE EMAIL"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/blue"
+                    android:layout_margin="15dp"
+                    android:layout_height="1dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reset Password"
+                    android:fontFamily="@font/poppinsbold"
+                    android:layout_marginTop="15dp"
+                    android:layout_gravity="center"
+                    android:textSize="24sp"/>
+                <EditText
+                    android:id="@+id/adminEmailSec"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="Email "/>
+                <EditText
+                    android:id="@+id/adminEmailreset"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="New password"/>
+                <EditText
+                    android:id="@+id/adminemailconform"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="Confirm password"/>
+                <Button
+                    android:id="@+id/resetbtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsbold"
+                    android:layout_marginTop="15dp"
+                    android:text="RESET PASSWORD"/>
+
+                <ImageView
+                    android:id="@+id/logout"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/logout"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LOG OUT"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/blue"/>
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

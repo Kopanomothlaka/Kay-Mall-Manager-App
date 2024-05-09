@@ -259,22 +259,7 @@
                         android:hint="Store Name "/>
 
 
-                    <EditText
-                        android:id="@+id/categoryEdittext"
-                        android:layout_width="match_parent"
-                        android:layout_height="41dp"
-                        android:background="@drawable/edit_view"
-                        android:paddingLeft="15dp"
-                        android:layout_marginTop="15dp"
-                        android:hint="Store Category "/>
-                    <EditText
-                        android:id="@+id/mallEdittext"
-                        android:layout_width="match_parent"
-                        android:layout_height="41dp"
-                        android:background="@drawable/edit_view"
-                        android:paddingLeft="15dp"
-                        android:layout_marginTop="15dp"
-                        android:hint="Mall Id "/>
+
 
                     <EditText
                         android:id="@+id/floorEdittext"

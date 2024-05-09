@@ -6,66 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FEFEFE"
+    android:hardwareAccelerated="true"
     tools:context=".MainActivity">
-    
-
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="19dp"
-            android:src="@drawable/ullustrator"
-            android:layout_gravity="center"/>
-        <ImageView
-            android:id="@+id/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logout"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="top|right"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
-            android:text="Log Out"
-            android:fontFamily="@font/poppiesregular"
-            android:textColor="@color/blue"
-            android:layout_marginTop="80dp"
-            android:layout_gravity="top|right"/>
-    </FrameLayout>
 
 
 
 
-       <LinearLayout
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_gravity="center"
-           android:orientation="horizontal">
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Kay"
-               android:fontFamily="@font/poppinsbold"
-               android:textSize="50sp"
-               android:layout_gravity="center"
-               />
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Mall"
-               android:fontFamily="@font/poppinsbold"
-               android:textSize="50sp"
-               android:textColor="@color/gold"
-               android:layout_gravity="center"
-               />
-
-       </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -77,6 +23,65 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="19dp"
+                android:src="@drawable/ullustrator"
+                android:layout_gravity="center"/>
+
+
+            <ImageView
+                android:id="@+id/logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/profile"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="top|right"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:text="Profile"
+                android:fontFamily="@font/poppiesregular"
+                android:textColor="@color/blue"
+                android:layout_marginTop="80dp"
+                android:layout_gravity="top|right"/>
+        </FrameLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mall of "
+                android:fontFamily="@font/poppinsbold"
+                android:textSize="40sp"
+                android:layout_gravity="center"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The North"
+                android:fontFamily="@font/poppinsbold"
+                android:textSize="40sp"
+                android:textColor="@color/gold"
+                android:layout_gravity="center"
+                />
+
+        </LinearLayout>
 
 
         <androidx.cardview.widget.CardView
@@ -202,6 +207,49 @@
             <!-- Add other views or content inside the CardView as needed -->
 
         </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/gotoparking"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="8dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/parkinng"
+                android:foreground="@drawable/black_overlay"
+                android:alpha="0.59"
+                />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Parking"
+                    android:textSize="30sp"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="#FFFFFF"
+                    android:layout_gravity="center"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/right"
+                    android:layout_marginRight="25dp"
+                    android:layout_gravity="center|right"/>
+
+            </FrameLayout>
+
+
+            <!-- Add other views or content inside the CardView as needed -->
+
+        </androidx.cardview.widget.CardView>
+
 
 
 

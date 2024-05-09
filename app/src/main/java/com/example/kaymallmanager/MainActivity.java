@@ -17,7 +17,7 @@ import java.sql.Connection;
 public class MainActivity extends AppCompatActivity {
 
 CardView stores,security,cleaners,maintain,event,parking;
-ImageView loutout;
+ImageView loutout,home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +28,15 @@ ImageView loutout;
         security=findViewById(R.id.GoToSecurity);
         cleaners=findViewById(R.id.gotocleaners);
         loutout=findViewById(R.id.logout);
+        parking=findViewById(R.id.gotoparking);
+
+
+
 
         loutout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LogInActivity.class);
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -53,6 +57,14 @@ ImageView loutout;
                 startActivity(intent2);
             }
         });
+        parking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent3 =new Intent(MainActivity.this,ParkingActivity.class);
+                startActivity(intent3);
+            }
+        });
+
         cleaners.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

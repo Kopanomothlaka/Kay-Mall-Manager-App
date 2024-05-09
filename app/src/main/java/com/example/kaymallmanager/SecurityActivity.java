@@ -2,6 +2,9 @@ package com.example.kaymallmanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +28,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SecurityActivity extends AppCompatActivity {
 
@@ -37,6 +41,8 @@ public class SecurityActivity extends AppCompatActivity {
     TextView display,Dname,Dshift;
     EditText SecurityId,MallID,Name,Email,Shift ,searchEdit;
     Button search ,add,update,delete;
+    private ProgressDialog progressDialog;
+
 
 
     @Override
@@ -46,7 +52,6 @@ public class SecurityActivity extends AppCompatActivity {
         display=findViewById(R.id.displaySecurityNo);
 
         SecurityId=findViewById(R.id.SecID);
-        MallID=findViewById(R.id.MallIdEdittext);
         Name=findViewById(R.id.SecNameEdittext);
         Email=findViewById(R.id.EmailEdittext);
         Shift=findViewById(R.id.ShirtEdittext);
@@ -58,6 +63,8 @@ public class SecurityActivity extends AppCompatActivity {
         add=findViewById(R.id.AddSec);
         update=findViewById(R.id.UpdateSec);
         delete=findViewById(R.id.DeleteSec);
+        progressDialog = new ProgressDialog(this);
+
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +207,6 @@ public class SecurityActivity extends AppCompatActivity {
         }
     }
     private void DeleteSecurity() {
-
         try {
             dBconnection = new DBconnection();
             con = dBconnection.connectionclasss();
@@ -212,130 +218,209 @@ public class SecurityActivity extends AppCompatActivity {
                 } else if (!securityID.matches("[0-9]+")) {
                     Toast.makeText(SecurityActivity.this, "Enter a numeric Security ID", Toast.LENGTH_SHORT).show();
                 } else {
-                    String sql = "DELETE FROM Security WHERE SecurityID = ?";
-                    PreparedStatement preparedStatement = con.prepareStatement(sql);
-                    preparedStatement.setString(1, securityID);
+                    // Show a confirmation dialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Confirm Deletion");
+                    builder.setMessage("Are you sure you want to delete this security personnel?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            try {
+                                String sql = "DELETE FROM Security WHERE SecurityID = ?";
+                                PreparedStatement preparedStatement = con.prepareStatement(sql);
+                                preparedStatement.setString(1, securityID);
 
-                    int rowsAffected = preparedStatement.executeUpdate();
-                    if (rowsAffected > 0) {
-                        Toast.makeText(SecurityActivity.this, "Security Guard Deleted", Toast.LENGTH_LONG).show();
-                        // Clear EditText field after successful deletion
-                        SecurityId.setText("");
-                    } else {
-                        Toast.makeText(SecurityActivity.this, "No security guard found with that ID", Toast.LENGTH_LONG).show();
-                    }
+                                int rowsAffected = preparedStatement.executeUpdate();
+                                if (rowsAffected > 0) {
+                                    Toast.makeText(SecurityActivity.this, "Security Guard Deleted", Toast.LENGTH_LONG).show();
+                                    // Clear EditText field after successful deletion
+                                    SecurityId.setText("");
+                                } else {
+                                    Toast.makeText(SecurityActivity.this, "No security guard found with that ID", Toast.LENGTH_LONG).show();
+                                }
+                            } catch (Exception e) {
+                                Log.e("Error: ", e.getMessage());
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Cancelled deletion
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             }
         } catch (Exception e) {
             Log.e("Error: ", e.getMessage());
         }
-
-
-
     }
 
     private void UpdateSecurity() {
-
         try {
+            progressDialog.setMessage("Updating security personnel...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
             dBconnection = new DBconnection();
             con = dBconnection.connectionclasss();
             if (con != null) {
-                String securityID = SecurityId.getText().toString().trim();
-                String mallID = MallID.getText().toString().trim();
+                String securityId = SecurityId.getText().toString().trim();
                 String name = Name.getText().toString().trim();
                 String email = Email.getText().toString().trim();
                 String shift = Shift.getText().toString().trim();
 
-                if (securityID.isEmpty() || mallID.isEmpty() || name.isEmpty() || email.isEmpty() || shift.isEmpty()) {
-                    Toast.makeText(SecurityActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                } else if (!securityID.matches("[0-9]+")) {
-                    Toast.makeText(SecurityActivity.this, "Enter a numeric Security ID", Toast.LENGTH_SHORT).show();
-                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(SecurityActivity.this, "Enter a valid email address", Toast.LENGTH_SHORT).show();
+                if (securityId.isEmpty()) {
+                    Toast.makeText(this, "Please enter Security ID for update", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                } else if (!securityId.matches("[0-9]+")) {
+                    Toast.makeText(this, "Enter a numeric Security ID", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 } else {
-                    String sql = "UPDATE Security SET MallID = ?, SecurityPersonnelName = ?, ContactInformation = ?, ShiftSchedule = ? WHERE SecurityID = ?";
-                    PreparedStatement preparedStatement = con.prepareStatement(sql);
-                    preparedStatement.setString(1, mallID);
-                    preparedStatement.setString(2, name);
-                    preparedStatement.setString(3, email);
-                    preparedStatement.setString(4, shift);
-                    preparedStatement.setString(5, securityID);
+                    // Show a confirmation dialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Confirm Update");
+                    builder.setMessage("Are you sure you want to update this security personnel?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            try {
+                                StringBuilder sqlUpdate = new StringBuilder("UPDATE Security SET ");
+                                List<String> updates = new ArrayList<>();
 
-                    int rowsAffected = preparedStatement.executeUpdate();
-                    if (rowsAffected > 0) {
-                        Toast.makeText(SecurityActivity.this, "Security Guard Updated", Toast.LENGTH_LONG).show();
-                        // Clear EditText fields after successful update
-                        SecurityId.setText("");
-                        MallID.setText("");
-                        Name.setText("");
-                        Email.setText("");
-                        Shift.setText("");
-                    } else {
-                        Toast.makeText(SecurityActivity.this, "Failed to update security guard", Toast.LENGTH_LONG).show();
-                    }
+                                if (!name.isEmpty()) {
+                                    updates.add("SecurityPersonnelName = '" + name + "'");
+                                }
+                                if (!email.isEmpty()) {
+                                    updates.add("ContactInformation = '" + email + "'");
+                                }
+                                if (!shift.isEmpty()) {
+                                    updates.add("ShiftSchedule = '" + shift + "'");
+                                }
+
+                                if (updates.isEmpty()) {
+                                    Toast.makeText(getApplicationContext(), "No valid updates provided", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
+                                    return; // Exit method if no valid updates
+                                }
+
+                                sqlUpdate.append(String.join(", ", updates));
+                                sqlUpdate.append(" WHERE SecurityID = '").append(securityId).append("'");
+
+                                Statement st = con.createStatement();
+                                int rowsAffected = st.executeUpdate(sqlUpdate.toString());
+
+                                if (rowsAffected > 0) {
+                                    // Update successful
+                                    Toast.makeText(getApplicationContext(), "Security personnel updated successfully", Toast.LENGTH_SHORT).show();
+                                    // Clear the fields after update if needed
+                                    SecurityId.setText("");
+                                    Name.setText("");
+                                    Email.setText("");
+                                    Shift.setText("");
+                                } else {
+                                    // Update failed
+                                    Toast.makeText(getApplicationContext(), "Failed to update security personnel", Toast.LENGTH_SHORT).show();
+                                }
+                                progressDialog.dismiss();
+                            } catch (Exception e) {
+                                Log.e("Error : ", e.getMessage());
+                                progressDialog.dismiss();
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Cancelled update
+                            progressDialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             }
         } catch (Exception e) {
-            Log.e("Error: ", e.getMessage());
+            Log.e("Error : ", e.getMessage());
+            progressDialog.dismiss();
         }
-
-
-
-
-
-
-
-
     }
 
-    private void AddSecurity() {
 
+
+    private void AddSecurity() {
         try {
+            progressDialog.setMessage("Adding security personnel...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
             dBconnection = new DBconnection();
             con = dBconnection.connectionclasss();
             if (con != null) {
-                String Security = SecurityId.getText().toString().trim();
-                String mallid = MallID.getText().toString().trim();
+                String securityId = SecurityId.getText().toString().trim();
                 String name = Name.getText().toString().trim();
                 String email = Email.getText().toString().trim();
                 String shift = Shift.getText().toString().trim();
 
-                if (Security.isEmpty() || mallid.isEmpty() || name.isEmpty() || email.isEmpty() || shift.isEmpty()) {
-                    Toast.makeText(SecurityActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                } else if (!Security.matches("[0-9]+")) {
-                    Toast.makeText(SecurityActivity.this, "Enter a numeric Security ID", Toast.LENGTH_SHORT).show();
+                if (securityId.isEmpty() || name.isEmpty() || email.isEmpty() || shift.isEmpty()) {
+                    Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                } else if (!securityId.matches("[0-9]+")) {
+                    Toast.makeText(this, "Enter a numeric Security ID", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(SecurityActivity.this, "Enter a valid email address", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Enter a valid email address", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 } else {
-                    String sql = "INSERT INTO Security (SecurityID, MallID, SecurityPersonnelName, ContactInformation, ShiftSchedule) VALUES (?, ?, ?, ?, ?)";
-                    PreparedStatement preparedStatement = con.prepareStatement(sql);
-                    preparedStatement.setString(1, Security);
-                    preparedStatement.setString(2, mallid);
-                    preparedStatement.setString(3, name);
-                    preparedStatement.setString(4, email);
-                    preparedStatement.setString(5, shift);
+                    // Show a confirmation dialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Confirm Addition");
+                    builder.setMessage("Are you sure you want to add this security personnel?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            try {
+                                String sqlInsert = "INSERT INTO Security (SecurityID, SecurityPersonnelName, ContactInformation, ShiftSchedule) " +
+                                        "VALUES ('" + securityId + "', '" + name + "', '" + email + "', '" + shift + "')";
+                                Statement st = con.createStatement();
+                                int rowsAffected = st.executeUpdate(sqlInsert);
 
-                    int rowsAffected = preparedStatement.executeUpdate();
-                    if (rowsAffected > 0) {
-                        Toast.makeText(SecurityActivity.this, "New Security Guard Added", Toast.LENGTH_LONG).show();
-                        // Clear EditText fields after successful addition
-                        SecurityId.setText("");
-                        MallID.setText("");
-                        Name.setText("");
-                        Email.setText("");
-                        Shift.setText("");
-                    } else {
-                        Toast.makeText(SecurityActivity.this, "Failed to add security guard", Toast.LENGTH_LONG).show();
-                    }
+                                if (rowsAffected > 0) {
+                                    // Insertion successful
+                                    Toast.makeText(getApplicationContext(), "Security personnel added successfully", Toast.LENGTH_SHORT).show();
+                                    // Clear the fields after insertion if needed
+                                    SecurityId.setText("");
+                                    Name.setText("");
+                                    Email.setText("");
+                                    Shift.setText("");
+                                } else {
+                                    // Insertion failed
+                                    Toast.makeText(getApplicationContext(), "Failed to add security personnel", Toast.LENGTH_SHORT).show();
+                                }
+                                progressDialog.dismiss();
+                            } catch (Exception e) {
+                                Log.e("Error : ", e.getMessage());
+                                progressDialog.dismiss();
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Cancelled addition
+                            progressDialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             }
         } catch (Exception e) {
-            Log.e("Error: ", e.getMessage());
+            Log.e("Error : ", e.getMessage());
+            progressDialog.dismiss();
         }
-
-
-
-
     }
 
     private void searchMethod() {
@@ -389,12 +474,12 @@ public class SecurityActivity extends AppCompatActivity {
             dBconnection = new DBconnection();
             con = dBconnection.connectionclasss();
             if (con != null) {
-                String sqldisplay = "SELECT COUNT(*) AS ParkingID FROM Parking";
+                String sqldisplay = "SELECT COUNT(*) AS SecurityID FROM Security";
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery(sqldisplay);
                 if (rs.next()) {
-                    int ParkingID = rs.getInt("ParkingID");
-                    display.setText(" " + ParkingID);
+                    int SecurityID = rs.getInt("SecurityID");
+                    display.setText(" " + SecurityID);
                 }
                 rs.close(); // Close ResultSet
                 st.close(); // Close statement

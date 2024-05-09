@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +7,12 @@
     android:orientation="vertical"
     tools:context=".LogInActivity">
 
+
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
 
 
 
@@ -74,7 +80,31 @@
             android:layout_height="46dp"
             android:paddingLeft="10dp"
             android:inputType="numberPassword"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/edit_view"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:layout_gravity="left"
+                android:textColor="@color/black"
+                android:layout_marginLeft="15dp"
+                android:text="New admin  ?"/>
+            <TextView
+                android:id="@+id/reisterTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:layout_gravity="left"
+                android:layout_marginLeft="115dp"
+                android:textColor="@color/blue"
+                android:text="create account"/>
+
+        </FrameLayout>
 
 
         <Button
@@ -84,6 +114,31 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/btn_bg"
             android:text="LOG IN"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:layout_gravity="left"
+                android:textColor="@color/black"
+                android:layout_marginLeft="15dp"
+                android:text="Forgetten password ?"/>
+            <TextView
+                android:id="@+id/resetTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:layout_gravity="center"
+                android:layout_marginLeft="55dp"
+                android:textColor="@color/blue"
+                android:text="reset password"/>
+
+        </FrameLayout>
+
+
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
@@ -93,7 +148,9 @@
 
     </LinearLayout>
 
+  </LinearLayout>
 
 
 
-</LinearLayout>
+
+</ScrollView>

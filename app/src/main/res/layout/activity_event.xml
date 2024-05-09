@@ -1,9 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F6E5CA"
     tools:context=".EventActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:src="@drawable/letsparty"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/Searchidcleaner"
+                    android:layout_width="250dp"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_margin="5dp"
+                    android:hint="Search using Even.... "/>
+                <Button
+
+                    android:id="@+id/searchBtnCleaners"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Search"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/btn_bg"
+                    android:fontFamily="@font/poppinsbold"/>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:cardCornerRadius="8dp">
+
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/cleanerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Event"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppinsbold"
+                        android:textColor="@color/blue"
+                        android:padding="10dp"
+
+                        android:layout_gravity="center|left"
+                        />
+                    <TextView
+                        android:id="@+id/shiftIdshow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Location"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppiesregular"
+                        android:textColor="@color/blue"
+                        android:padding="10dp"
+
+                        android:layout_gravity="center|right"
+                        />
+
+
+                </FrameLayout>
+
+
+                <!-- Add other views or content inside the CardView as needed -->
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Event Details"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:layout_margin="10dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/blue"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/EventID"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="Event ID "/>
+
+                <EditText
+                    android:id="@+id/EventNameEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="EventName "/>
+
+
+                <EditText
+                    android:id="@+id/IdmallEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="Mall Id"/>
+                <EditText
+                    android:id="@+id/DateEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="Event Date"/>
+
+                <EditText
+                    android:id="@+id/locationEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@drawable/edit_view"
+                    android:paddingLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="Location "/>
+
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/AddSec"
+                        android:layout_width="130dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="35dp"
+                        android:background="@drawable/btn_bg"
+                        android:layout_gravity="center|left"
+                        android:text="ADD " />
+                    <Button
+                        android:id="@+id/UpdateSec"
+                        android:layout_width="120dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="35dp"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/btn_bg"
+                        android:layout_gravity="center"
+                        android:text="UPDATE" />
+                    <Button
+                        android:id="@+id/DeleteSec"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="35dp"
+                        android:background="@drawable/btn_bg"
+                        android:layout_gravity="center|right"
+                        android:text="DELETE" />
+
+                </FrameLayout>
+
+
+
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+    </ScrollView>
+
+</LinearLayout>

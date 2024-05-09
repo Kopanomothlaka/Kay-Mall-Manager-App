@@ -2,6 +2,9 @@ package com.example.kaymallmanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +26,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CleanersActivity extends AppCompatActivity {
 
@@ -33,6 +37,7 @@ public class CleanersActivity extends AppCompatActivity {
     TextView cal,cleaners,shift;
     EditText enter,CleanerId,CleanerName,Mall,Email,ShiftSchedule,Area;
     Button SearchBnt,AddBtn,Update,Delete;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +55,10 @@ public class CleanersActivity extends AppCompatActivity {
 
         CleanerId=findViewById(R.id.CleanerID);
         CleanerName=findViewById(R.id.cleanerEdittext);
-        Mall=findViewById(R.id.CleanerMallEdittext);
         Email=findViewById(R.id.EmailEdittext);
         ShiftSchedule=findViewById(R.id.ShirtEdittext);
         Area=findViewById(R.id.AreaEdittext);
+        progressDialog = new ProgressDialog(this);
 
 
 
@@ -138,95 +143,158 @@ public class CleanersActivity extends AppCompatActivity {
 
 
     private void DeleteCleaner() {
-
         try {
-
             dBconnection = new DBconnection();
             con = dBconnection.connectionclasss();
             if (con != null) {
-                String CleanerID = CleanerId.getText().toString().trim();
+                String cleanerID = CleanerId.getText().toString().trim();
 
-                if (CleanerID.isEmpty()) {
-                    Toast.makeText(this, "Please enter a Store ID", Toast.LENGTH_SHORT).show();
-
+                if (cleanerID.isEmpty()) {
+                    Toast.makeText(this, "Please enter a Cleaner ID", Toast.LENGTH_SHORT).show();
                 } else {
-                    String sqlDelete = "DELETE FROM Cleaners WHERE CleanerID = '" + CleanerID + "'";
-                    Statement st = con.createStatement();
-                    int rowsAffected = st.executeUpdate(sqlDelete);
+                    // Show a confirmation dialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Confirm Deletion");
+                    builder.setMessage("Are you sure you want to delete this cleaner?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            try {
+                                String sqlDelete = "DELETE FROM Cleaners WHERE CleanerID = '" + cleanerID + "'";
+                                Statement st = con.createStatement();
+                                int rowsAffected = st.executeUpdate(sqlDelete);
 
-                    if (rowsAffected > 0) {
-                        // Deletion successful
-                        Toast.makeText(this, "Cleaner deleted successfully", Toast.LENGTH_SHORT).show();
-                        // Clear the fields after deletion if needed
-                        CleanerId.setText("");
-                        CleanerName.setText("");
-                        Mall.setText("");
-                        Email.setText("");
-                        ShiftSchedule.setText("");
-                        Area.setText("");
-                    } else {
-                        // Deletion failed, store not found
-                        Toast.makeText(this, "Cleaner not found or deletion failed", Toast.LENGTH_SHORT).show();
-                    }
-
+                                if (rowsAffected > 0) {
+                                    // Deletion successful
+                                    Toast.makeText(getApplicationContext(), "Cleaner deleted successfully", Toast.LENGTH_SHORT).show();
+                                    // Clear the fields after deletion if needed
+                                    CleanerId.setText("");
+                                    CleanerName.setText("");
+                                    Mall.setText("");
+                                    Email.setText("");
+                                    ShiftSchedule.setText("");
+                                    Area.setText("");
+                                } else {
+                                    // Deletion failed, cleaner not found
+                                    Toast.makeText(getApplicationContext(), "Cleaner not found or deletion failed", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
+                                Log.e("Error : ", e.getMessage());
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Cancelled deletion
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             }
         } catch (Exception e) {
             Log.e("Error : ", e.getMessage());
-
         }
-
-
-
     }
 
     private void UpdateCleaner() {
         try {
+            progressDialog.setMessage("Updating cleaner...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
             dBconnection = new DBconnection();
             con = dBconnection.connectionclasss();
             if (con != null) {
-                String cleanerid= CleanerId.getText().toString().trim();
-                String cleanername = CleanerName.getText().toString().trim();
-                String mall = Mall.getText().toString().trim();
-                String email = Email.getText().toString().trim();
+                String cleanerId = CleanerId.getText().toString().trim();
+                String cleanerName = CleanerName.getText().toString().trim();
+                String contactInformation = Email.getText().toString().trim(); // Assuming Email field corresponds to ContactInformation
                 String shift = ShiftSchedule.getText().toString().trim();
                 String area = Area.getText().toString().trim();
 
-                if (cleanerid.isEmpty() || mall.isEmpty() || cleanername.isEmpty() || email.isEmpty() || shift.isEmpty()) {
-                    Toast.makeText(CleanersActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                } else if (!cleanerid.matches("[0-9]+")) {
-                    Toast.makeText(CleanersActivity.this, "Enter a numeric Cleaner ID", Toast.LENGTH_SHORT).show();
-                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(CleanersActivity.this, "Enter a valid email address", Toast.LENGTH_SHORT).show();
+                if (cleanerId.isEmpty()) {
+                    Toast.makeText(this, "Please enter Cleaner ID for update", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                } else if (!cleanerId.matches("[0-9]+")) {
+                    Toast.makeText(this, "Enter a numeric Cleaner ID", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 } else {
-                    String sql = "UPDATE Cleaners SET CleanerName = ?, MallID = ?, ContactInformation = ?, ShiftSchedule = ?, CleaningAreas = ? WHERE CleanerID = ?";
-                    PreparedStatement preparedStatement = con.prepareStatement(sql);
-                    preparedStatement.setString(1, cleanername);
-                    preparedStatement.setString(2, mall);
-                    preparedStatement.setString(3, email);
-                    preparedStatement.setString(4, shift);
-                    preparedStatement.setString(5, area);
-                    preparedStatement.setString(6, cleanerid);
+                    // Show a confirmation dialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Confirm Update");
+                    builder.setMessage("Are you sure you want to update this cleaner?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            try {
+                                StringBuilder sqlUpdate = new StringBuilder("UPDATE Cleaners SET ");
+                                List<String> updates = new ArrayList<>();
 
-                    int rowsAffected = preparedStatement.executeUpdate();
-                    if (rowsAffected > 0) {
-                        Toast.makeText(CleanersActivity.this, "Cleaner Updated", Toast.LENGTH_LONG).show();
-                        // Clear EditText fields after successful update
-                        CleanerId.setText("");
-                        CleanerName.setText("");
-                        Mall.setText("");
-                        Email.setText("");
-                        ShiftSchedule.setText("");
-                        Area.setText("");
-                    } else {
-                        Toast.makeText(CleanersActivity.this, "Failed to update cleaner", Toast.LENGTH_LONG).show();
-                    }
+                                if (!cleanerName.isEmpty()) {
+                                    updates.add("CleanerName = '" + cleanerName + "'");
+                                }
+                                if (!contactInformation.isEmpty()) {
+                                    updates.add("ContactInformation = '" + contactInformation + "'");
+                                }
+                                if (!shift.isEmpty()) {
+                                    updates.add("ShiftSchedule = '" + shift + "'");
+                                }
+                                if (!area.isEmpty()) {
+                                    updates.add("CleaningAreas = '" + area + "'");
+                                }
+
+                                if (updates.isEmpty()) {
+                                    Toast.makeText(getApplicationContext(), "No valid updates provided", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
+                                    return; // Exit method if no valid updates
+                                }
+
+                                sqlUpdate.append(String.join(", ", updates));
+                                sqlUpdate.append(" WHERE CleanerID = '").append(cleanerId).append("'");
+
+                                Statement st = con.createStatement();
+                                int rowsAffected = st.executeUpdate(sqlUpdate.toString());
+
+                                if (rowsAffected > 0) {
+                                    // Update successful
+                                    Toast.makeText(getApplicationContext(), "Cleaner updated successfully", Toast.LENGTH_SHORT).show();
+                                    // Clear the fields after update if needed
+                                    CleanerId.setText("");
+                                    CleanerName.setText("");
+                                    Email.setText("");
+                                    ShiftSchedule.setText("");
+                                    Area.setText("");
+                                } else {
+                                    // Update failed
+                                    Toast.makeText(getApplicationContext(), "Failed to update cleaner", Toast.LENGTH_SHORT).show();
+                                }
+                                progressDialog.dismiss();
+                            } catch (Exception e) {
+                                Log.e("Error : ", e.getMessage());
+                                progressDialog.dismiss();
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Cancelled update
+                            progressDialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             }
         } catch (Exception e) {
-            Log.e("Error: ", e.getMessage());
+            Log.e("Error : ", e.getMessage());
+            progressDialog.dismiss();
         }
     }
+
+
+
 
 
     private void calculateSecurity() {
@@ -262,14 +330,14 @@ public class CleanersActivity extends AppCompatActivity {
             dBconnection = new DBconnection();
             con = dBconnection.connectionclasss();
             if (con != null) {
-                String CleanerID = enter.getText().toString().trim();
+                String CleanerName = enter.getText().toString().trim();
 
-                if (CleanerID.isEmpty()) {
+                if (CleanerName.isEmpty()) {
                     Toast.makeText(this, "Please enter a Store ID", Toast.LENGTH_SHORT).show();
 
 
                 } else {
-                    String sqlsearch = "SELECT * FROM Cleaners WHERE CleanerID = '" + CleanerID + "'";
+                    String sqlsearch = "SELECT * FROM Cleaners WHERE CleanerName = '" + CleanerName + "'";
                     Statement st = con.createStatement();
                     ResultSet rs = st.executeQuery(sqlsearch);
 
@@ -297,57 +365,80 @@ public class CleanersActivity extends AppCompatActivity {
 
     }
     private void AddCleaner() {
-
         try {
+            progressDialog.setMessage("Adding cleaner...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
             dBconnection = new DBconnection();
             con = dBconnection.connectionclasss();
             if (con != null) {
-                String cleanerid= CleanerId.getText().toString().trim();
-                String cleanername = CleanerName.getText().toString().trim();
-                String mall = Mall.getText().toString().trim();
-                String email = Email.getText().toString().trim();
+                String cleanerId = CleanerId.getText().toString().trim();
+                String cleanerName = CleanerName.getText().toString().trim();
+                String contactInformation = Email.getText().toString().trim();
                 String shift = ShiftSchedule.getText().toString().trim();
                 String area = Area.getText().toString().trim();
 
-                if (cleanerid.isEmpty() || mall.isEmpty() || cleanername.isEmpty() || email.isEmpty() || shift.isEmpty()) {
-                    Toast.makeText(CleanersActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                } else if (!cleanerid.matches("[0-9]+")) {
-                    Toast.makeText(CleanersActivity.this, "Enter a numeric Security ID", Toast.LENGTH_SHORT).show();
-                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(CleanersActivity.this, "Enter a valid email address", Toast.LENGTH_SHORT).show();
+                if (cleanerId.isEmpty() || cleanerName.isEmpty() || contactInformation.isEmpty() || shift.isEmpty() || area.isEmpty()) {
+                    Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                } else if (!cleanerId.matches("[0-9]+")) {
+                    Toast.makeText(this, "Enter a numeric Cleaner ID", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                } else if (!Patterns.EMAIL_ADDRESS.matcher(contactInformation).matches()) {
+                    Toast.makeText(this, "Enter a valid email address", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 } else {
-                    String sql = "INSERT INTO Cleaners (CleanerID, CleanerName, MallID, ContactInformation, ShiftSchedule,CleaningAreas) VALUES (?, ?, ?, ?, ?,?)";
-                    PreparedStatement preparedStatement = con.prepareStatement(sql);
-                    preparedStatement.setString(1, cleanerid);
-                    preparedStatement.setString(2, cleanername);
-                    preparedStatement.setString(3, mall);
-                    preparedStatement.setString(4, email);
-                    preparedStatement.setString(5, shift);
-                    preparedStatement.setString(6, area);
+                    // Show a confirmation dialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Confirm Addition");
+                    builder.setMessage("Are you sure you want to add this cleaner?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            try {
+                                String sqlInsert = "INSERT INTO Cleaners (CleanerID, CleanerName, ContactInformation, ShiftSchedule, CleaningAreas) " +
+                                        "VALUES ('" + cleanerId + "', '" + cleanerName + "', '" + contactInformation + "', '" + shift + "', '" + area + "')";
+                                Statement st = con.createStatement();
+                                int rowsAffected = st.executeUpdate(sqlInsert);
 
-                    int rowsAffected = preparedStatement.executeUpdate();
-                    if (rowsAffected > 0) {
-                        Toast.makeText(CleanersActivity.this, "New Security Guard Added", Toast.LENGTH_LONG).show();
-                        // Clear EditText fields after successful addition
-                        CleanerId.setText("");
-                        CleanerName.setText("");
-                        Mall.setText("");
-                        Email.setText("");
-                        ShiftSchedule.setText("");
-                        Area.setText("");
-                    } else {
-                        Toast.makeText(CleanersActivity.this, "Failed to add security guard", Toast.LENGTH_LONG).show();
-                    }
+                                if (rowsAffected > 0) {
+                                    // Insertion successful
+                                    Toast.makeText(getApplicationContext(), "Cleaner added successfully", Toast.LENGTH_SHORT).show();
+                                    // Clear the fields after insertion if needed
+                                    CleanerId.setText("");
+                                    CleanerName.setText("");
+                                    Email.setText("");
+                                    ShiftSchedule.setText("");
+                                    Area.setText("");
+                                } else {
+                                    // Insertion failed
+                                    Toast.makeText(getApplicationContext(), "Failed to add cleaner", Toast.LENGTH_SHORT).show();
+                                }
+                                progressDialog.dismiss();
+                            } catch (Exception e) {
+                                Log.e("Error : ", e.getMessage());
+                                progressDialog.dismiss();
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Cancelled addition
+                            progressDialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             }
+        } catch (Exception e) {
+            Log.e("Error : ", e.getMessage());
+            progressDialog.dismiss();
         }
-        catch (Exception e) {
-            Log.e("Error: ", e.getMessage());
-        }
-
-
-
-
     }
+
+
 
 }

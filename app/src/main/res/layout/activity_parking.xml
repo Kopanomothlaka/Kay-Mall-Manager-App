@@ -29,7 +29,7 @@
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
                 <EditText
-                    android:id="@+id/Searchidcleaner"
+                    android:id="@+id/Searchidparking"
                     android:layout_width="250dp"
                     android:layout_height="41dp"
                     android:background="@drawable/edit_view"
@@ -38,7 +38,7 @@
                     android:hint="Search using Parking Id.... "/>
                 <Button
 
-                    android:id="@+id/searchBtnCleaners"
+                    android:id="@+id/searchBtnE"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Search"
@@ -61,7 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
-                        android:id="@+id/cleanerName"
+                        android:id="@+id/parkingnamme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Area"
@@ -111,7 +111,7 @@
                     android:layout_marginBottom="15dp"/>
 
                 <EditText
-                    android:id="@+id/SecID"
+                    android:id="@+id/parkingID"
                     android:layout_width="match_parent"
                     android:layout_height="41dp"
                     android:background="@drawable/edit_view"
@@ -119,35 +119,21 @@
                     android:layout_marginTop="15dp"
                     android:hint="Parking ID "/>
 
-                <EditText
-                    android:id="@+id/cleanerEdittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="41dp"
-                    android:background="@drawable/edit_view"
-                    android:paddingLeft="15dp"
-                    android:layout_marginTop="15dp"
-                    android:hint="Mall ID "/>
+
 
 
                 <EditText
-                    android:id="@+id/mallEdittext"
+                    android:id="@+id/parkingnameEdittext"
                     android:layout_width="match_parent"
                     android:layout_height="41dp"
                     android:background="@drawable/edit_view"
                     android:paddingLeft="15dp"
                     android:layout_marginTop="15dp"
                     android:hint="Parking Area"/>
-                <EditText
-                    android:id="@+id/EmailEdittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="41dp"
-                    android:background="@drawable/edit_view"
-                    android:paddingLeft="15dp"
-                    android:layout_marginTop="15dp"
-                    android:hint="Number of Parking Spaces"/>
+
 
                 <EditText
-                    android:id="@+id/ShirtEdittext"
+                    android:id="@+id/availableEdittext"
                     android:layout_width="match_parent"
                     android:layout_height="41dp"
                     android:background="@drawable/edit_view"
@@ -162,7 +148,7 @@
                     android:layout_height="wrap_content">
 
                     <Button
-                        android:id="@+id/AddSec"
+                        android:id="@+id/AddE"
                         android:layout_width="130dp"
                         android:layout_height="50dp"
                         android:layout_marginTop="15dp"
@@ -171,7 +157,7 @@
                         android:layout_gravity="center|left"
                         android:text="ADD " />
                     <Button
-                        android:id="@+id/UpdateSec"
+                        android:id="@+id/UpdateE"
                         android:layout_width="120dp"
                         android:layout_height="50dp"
                         android:layout_marginTop="15dp"
@@ -181,7 +167,7 @@
                         android:layout_gravity="center"
                         android:text="UPDATE" />
                     <Button
-                        android:id="@+id/DeleteSec"
+                        android:id="@+id/DeleteE"
                         android:layout_width="100dp"
                         android:layout_height="50dp"
                         android:layout_marginTop="15dp"
